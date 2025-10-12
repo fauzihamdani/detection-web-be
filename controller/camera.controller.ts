@@ -11,13 +11,12 @@ type CreateCamera = z.infer<typeof createCameraSchema>;
 
 export const getCamera = async (req: Request, res: Response) => {
   try {
-    const comments = await Camera.find()
-      .populate("user", "-password")
-      .populate("reportId");
+    const Cameras = await Camera.find();
+    console.log("Cameras => ", Cameras);
 
     return res
       .status(200)
-      .json({ success: true, message: "success get data", data: comments });
+      .json({ success: true, message: "success get data", data: Cameras });
   } catch (error) {
     return res
       .status(404)

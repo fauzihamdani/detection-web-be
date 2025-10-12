@@ -18,7 +18,7 @@ const app = express();
 const port = 3005;
 console.log("APP");
 
-// connectDB();
+connectDB();
 
 app.use(express.json());
 app.use(cors(corsOptions));
