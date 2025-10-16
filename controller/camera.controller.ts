@@ -41,16 +41,26 @@ export const getCameraById = async (req: Request, res: Response) => {
 
 export const createCamera = async (req: Request, res: Response) => {
   try {
+    console.log("req.body => ", req.body);
     const inputData: CreateCamera = {
       ...req.body,
     };
-    const comment = createCameraSchema.safeParse(inputData);
+    const camera = createCameraSchema.safeParse(inputData);
 
-    const createdComment = await Camera.create(comment.data);
+    if (!camera.success) {
+      console.log("error=>", camera.error.message);
+      return res.status(404).json({
+        success: false,
+        message: "something error when add camera",
+      });
+    }
+
+    console.log(camera);
+    const createdComment = await Camera.create(camera.data);
 
     return res.status(201).json({
       success: true,
-      message: "successfully create comment",
+      message: "successfully create camera",
       data: createdComment,
     });
   } catch (error) {

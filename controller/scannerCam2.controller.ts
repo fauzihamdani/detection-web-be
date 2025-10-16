@@ -21,11 +21,12 @@ const probeDevice = async (ip: string) => {
     await device.init(); // Initialize the connection
     console.log(`Device found at ${ip}`);
     const deviceInfo = device.getInformation();
-    if (deviceInfo.Manufacturer) {
-      const deviceInfoWithIp = { ...deviceInfo, ip: ip };
-      console.log("deviceInfoWithIp =>", deviceInfoWithIp);
-      return deviceInfoWithIp;
-    }
+    console.log(deviceInfo);
+    // if (deviceInfo.Manufacturer) {
+    const deviceInfoWithIp = { ...deviceInfo, ip: ip };
+    console.log("deviceInfoWithIp =>", deviceInfoWithIp);
+    return deviceInfoWithIp;
+    // }
   } catch (err: any) {
     console.warn(`Error connecting to device at ${ip}:`, err.message || err);
     // console.log(`Failed to connect to ${ip}:`, err);
