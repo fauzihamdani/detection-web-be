@@ -13,4 +13,5 @@ export const createCameraSchema = z.object({
     .min(5, "Username must be at least 5 characters")
     .optional(),
   port: z.number().min(2, "Port must be at least 2 digit").optional(),
+  isShowed: z.boolean(),
 });

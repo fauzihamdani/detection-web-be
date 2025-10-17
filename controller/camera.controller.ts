@@ -11,7 +11,7 @@ type CreateCamera = z.infer<typeof createCameraSchema>;
 
 export const getCamera = async (req: Request, res: Response) => {
   try {
-    const Cameras = await Camera.find();
+    const Cameras = await Camera.find({ isShowed: true });
     console.log("Cameras => ", Cameras);
 
     return res
@@ -39,11 +39,70 @@ export const getCameraById = async (req: Request, res: Response) => {
   }
 };
 
+export const updateCameraById = async (req: Request, res: Response) => {
+  try {
+    const cameraId = req.params.id;
+    const updatedData = req.body;
+    const updatedCamera = await Camera.findByIdAndUpdate(
+      cameraId,
+
+      updatedData,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCamera) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Camera not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Camera updated successfully",
+      data: updatedCamera,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: "cannot found comments", error: error });
+  }
+};
+
+export const deleteCameraById = async (req: Request, res: Response) => {
+  try {
+    const cameraId = req.params.id;
+    const updatedData = req.body;
+    const updatedCamera = await Camera.findByIdAndUpdate(
+      cameraId,
+
+      { ...updatedData, isShowed: false },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCamera) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Camera not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Camera updated successfully",
+      data: updatedCamera,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: "cannot found comments", error: error });
+  }
+};
+
 export const createCamera = async (req: Request, res: Response) => {
   try {
     console.log("req.body => ", req.body);
     const inputData: CreateCamera = {
       ...req.body,
+      isShowed: true,
     };
     const camera = createCameraSchema.safeParse(inputData);
 

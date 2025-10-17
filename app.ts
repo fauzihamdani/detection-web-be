@@ -21,7 +21,7 @@ console.log("APP");
 connectDB();
 
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 const API_KEY = "my-secret-123";
 

@@ -10,7 +10,12 @@ import {
 // import { adminAuthMiddleware } from "../middlewares/adminAuthMiddleware";
 // import { createComment, getComments } from "../controller/comment.controller";
 // import { getFromWebui, getModels } from "../controller/test.controller";
-import { createCamera, getCamera } from "../controller/camera.controller";
+import {
+  createCamera,
+  deleteCameraById,
+  getCamera,
+  updateCameraById,
+} from "../controller/camera.controller";
 import { getCamNetwork } from "../controller/scannerCam.controller";
 import { getCamNetwork2 } from "../controller/scannerCam2.controller";
 import { getPtzController } from "../controller/ptzController.contoller";
@@ -32,7 +37,8 @@ const apiString = "/api";
 
 router.get(`${apiString}/cameras`, getCamera);
 router.post(`${apiString}/camera`, createCamera);
-router.patch(`${apiString}/camera/:id`, updateReport);
+router.put(`${apiString}/camera/:id`, updateCameraById);
+router.delete(`${apiString}/camera/:id`, deleteCameraById);
 
 router.get(`${apiString}/camera-scan`, getCamNetwork);
 // router.get(`${apiString}/camera-scan-2`, getCamNetwork2);
