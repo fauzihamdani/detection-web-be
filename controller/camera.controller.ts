@@ -11,9 +11,7 @@ type CreateCamera = z.infer<typeof createCameraSchema>;
 
 export const getCamera = async (req: Request, res: Response) => {
   try {
-    const Cameras = await Camera.find({ isShowed: true });
-    console.log("Cameras => ", Cameras);
-
+    const Cameras = await Camera.find({ isDeleted: false });
     return res
       .status(200)
       .json({ success: true, message: "success get data", data: Cameras });
@@ -45,7 +43,6 @@ export const updateCameraById = async (req: Request, res: Response) => {
     const updatedData = req.body;
     const updatedCamera = await Camera.findByIdAndUpdate(
       cameraId,
-
       updatedData,
       { new: true, runValidators: true }
     );
@@ -97,12 +94,70 @@ export const deleteCameraById = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteCamera = async (req: Request, res: Response) => {
+  try {
+    const cameraId = req.params.id;
+    const updatedData = req.body;
+    const updatedCamera = await Camera.findByIdAndUpdate(
+      cameraId,
+
+      { ...updatedData, isDeleted: true },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCamera) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Camera not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Camera updated successfully",
+      data: updatedCamera,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: "cannot found comments", error: error });
+  }
+};
+
+export const activateCameraById = async (req: Request, res: Response) => {
+  try {
+    const cameraId = req.params.id;
+    const updatedData = req.body;
+    const updatedCamera = await Camera.findByIdAndUpdate(
+      cameraId,
+
+      { ...updatedData, isShowed: true },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCamera) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Camera not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Camera updated successfully",
+      data: updatedCamera,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: "cannot found comments", error: error });
+  }
+};
+
 export const createCamera = async (req: Request, res: Response) => {
   try {
-    console.log("req.body => ", req.body);
     const inputData: CreateCamera = {
       ...req.body,
       isShowed: true,
+      isDeleted: false,
     };
     const camera = createCameraSchema.safeParse(inputData);
 
@@ -114,7 +169,6 @@ export const createCamera = async (req: Request, res: Response) => {
       });
     }
 
-    console.log(camera);
     const createdComment = await Camera.create(camera.data);
 
     return res.status(201).json({

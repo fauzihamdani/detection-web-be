@@ -11,7 +11,9 @@ import {
 // import { createComment, getComments } from "../controller/comment.controller";
 // import { getFromWebui, getModels } from "../controller/test.controller";
 import {
+  activateCameraById,
   createCamera,
+  deleteCamera,
   deleteCameraById,
   getCamera,
   updateCameraById,
@@ -39,6 +41,8 @@ router.get(`${apiString}/cameras`, getCamera);
 router.post(`${apiString}/camera`, createCamera);
 router.put(`${apiString}/camera/:id`, updateCameraById);
 router.delete(`${apiString}/camera/:id`, deleteCameraById);
+router.delete(`${apiString}/list/:id`, deleteCamera);
+router.post(`${apiString}/camera-activate/:id`, activateCameraById);
 
 router.get(`${apiString}/camera-scan`, getCamNetwork);
 // router.get(`${apiString}/camera-scan-2`, getCamNetwork2);

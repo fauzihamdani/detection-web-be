@@ -14,7 +14,6 @@ type UpdateInput = z.infer<typeof updatReportSchema>;
 export const getReports = async (req: Request, res: Response) => {
   const { isDone } = req.query;
   try {
-    console.log("isdone => ", String(isDone).toLocaleLowerCase());
     const reports = await Report.find()
       .populate("user", "-password")
       .populate("lastUpdateOnProcess")

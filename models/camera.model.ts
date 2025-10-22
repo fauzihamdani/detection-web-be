@@ -8,6 +8,7 @@ export interface CameraDoc extends Document {
   password?: string;
   port?: number;
   isShowed: boolean;
+  isDeleted: boolean;
 }
 
 const CameraModelModel = new Schema<CameraDoc>({
@@ -18,6 +19,7 @@ const CameraModelModel = new Schema<CameraDoc>({
   password: { type: String, required: false, default: null },
   port: { type: Number, required: false, default: null },
   isShowed: { type: Boolean, default: true },
+  isDeleted: { type: Boolean, default: false },
 });
 
 export const Camera = model<CameraDoc>("camera", CameraModelModel);
