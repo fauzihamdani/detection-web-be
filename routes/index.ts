@@ -16,11 +16,13 @@ import {
   deleteCamera,
   deleteCameraById,
   getCamera,
+  getRecording,
   updateCameraById,
 } from "../controller/camera.controller";
 import { getCamNetwork } from "../controller/scannerCam.controller";
 import { getCamNetwork2 } from "../controller/scannerCam2.controller";
 import { getPtzController } from "../controller/ptzController.contoller";
+import { getRecordings } from "../controller/recording.controller";
 
 const router = express.Router();
 const apiString = "/api";
@@ -43,10 +45,13 @@ router.put(`${apiString}/camera/:id`, updateCameraById);
 router.delete(`${apiString}/camera/:id`, deleteCameraById);
 router.delete(`${apiString}/list/:id`, deleteCamera);
 router.post(`${apiString}/camera-activate/:id`, activateCameraById);
+router.get(`${apiString}/recordings/:name`, getRecording);
 
 router.get(`${apiString}/camera-scan`, getCamNetwork);
 // router.get(`${apiString}/camera-scan-2`, getCamNetwork2);
 router.post(`${apiString}/camera-scan-2`, getCamNetwork2);
+
+router.get(`${apiString}/recordings`, getRecordings);
 
 router.get(`${apiString}/ptz`, getPtzController);
 
