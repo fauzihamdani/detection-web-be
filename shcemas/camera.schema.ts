@@ -15,4 +15,5 @@ export const createCameraSchema = z.object({
   port: z.number().min(2, "Port must be at least 2 digit").optional(),
   isShowed: z.boolean().optional(),
   isdeleted: z.boolean().optional(),
+  isRecording: z.boolean().optional(),
 });

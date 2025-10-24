@@ -14,7 +14,7 @@ import {
   activateCameraById,
   createCamera,
   deleteCamera,
-  deleteCameraById,
+  deactivateCameraById,
   getCamera,
   getRecording,
   updateCameraById,
@@ -42,7 +42,7 @@ const apiString = "/api";
 router.get(`${apiString}/cameras`, getCamera);
 router.post(`${apiString}/camera`, createCamera);
 router.put(`${apiString}/camera/:id`, updateCameraById);
-router.delete(`${apiString}/camera/:id`, deleteCameraById);
+router.delete(`${apiString}/camera/:id`, deactivateCameraById);
 router.delete(`${apiString}/list/:id`, deleteCamera);
 router.post(`${apiString}/camera-activate/:id`, activateCameraById);
 router.get(`${apiString}/recordings/:name`, getRecording);

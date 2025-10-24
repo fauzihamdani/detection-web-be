@@ -67,7 +67,7 @@ export const updateCameraById = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteCameraById = async (req: Request, res: Response) => {
+export const deactivateCameraById = async (req: Request, res: Response) => {
   try {
     const cameraId = req.params.id;
     const updatedData = req.body;
@@ -125,6 +125,35 @@ export const deleteCamera = async (req: Request, res: Response) => {
   }
 };
 
+export const updateIsRecording = async (req: Request, res: Response) => {
+  try {
+    const cameraId = req.params.id;
+    const updatedData = req.body;
+    const updatedCamera = await Camera.findByIdAndUpdate(
+      cameraId,
+
+      { ...updatedData, isRecording: true },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCamera) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Camera not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Camera updated successfully",
+      data: updatedCamera,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: "cannot found comments", error: error });
+  }
+};
+
 export const activateCameraById = async (req: Request, res: Response) => {
   try {
     const cameraId = req.params.id;
@@ -160,7 +189,9 @@ export const createCamera = async (req: Request, res: Response) => {
       ...req.body,
       isShowed: true,
       isDeleted: false,
+      // isRecording: false,
     };
+    console.log("inputData => ", inputData);
     const camera = createCameraSchema.safeParse(inputData);
 
     if (!camera.success) {

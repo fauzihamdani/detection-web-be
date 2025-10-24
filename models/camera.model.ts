@@ -9,6 +9,7 @@ export interface CameraDoc extends Document {
   port?: number;
   isShowed: boolean;
   isDeleted: boolean;
+  isRecording: boolean;
 }
 
 const CameraModelModel = new Schema<CameraDoc>({
@@ -20,6 +21,7 @@ const CameraModelModel = new Schema<CameraDoc>({
   port: { type: Number, required: false, default: null },
   isShowed: { type: Boolean, default: true },
   isDeleted: { type: Boolean, default: false },
+  isRecording: { type: Boolean, default: false },
 });
 
 export const Camera = model<CameraDoc>("camera", CameraModelModel);
